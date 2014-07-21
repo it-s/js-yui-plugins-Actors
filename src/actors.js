@@ -9,7 +9,7 @@ YUI.add('actors-plugin-actors', function (Y) {
   function CallActor(parent, args) {
     CallActor.superclass.constructor.call(this, parent, args);
   }
-  Y.extend(CallActor, Y.JUSTALK.Plugin.ActorsPluginBaseActor);
+  Y.extend(CallActor, Y.Plugins.ActorsPluginBaseActor);
 
   CallActor.NAME = 'call';
   CallActor.prototype.act = function (e) {
@@ -26,7 +26,7 @@ YUI.add('actors-plugin-actors', function (Y) {
   function OnClickCSSToggle(parent, args) {
     CallActor.superclass.constructor.call(this, parent, args);
   }
-  Y.extend(OnClickCSSToggle, Y.JUSTALK.Plugin.ActorsPluginBaseActor);
+  Y.extend(OnClickCSSToggle, Y.Plugins.ActorsPluginBaseActor);
 
   OnClickCSSToggle.NAME = 'cssToggle';
   OnClickCSSToggle.prototype.act = function (e) {
@@ -44,7 +44,7 @@ YUI.add('actors-plugin-actors', function (Y) {
     CallActor.superclass.constructor.call(this, parent, args);
     this.EVENT = 'change';
   }
-  Y.extend(ObserveActor, Y.JUSTALK.Plugin.ActorsPluginBaseActor);
+  Y.extend(ObserveActor, Y.Plugins.ActorsPluginBaseActor);
 
   ObserveActor.NAME = 'observe';
   ObserveActor.IS_INVALID = -1;

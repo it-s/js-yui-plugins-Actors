@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Actors plugin for YUI test page.">
+  <title>YUI Actors</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+  
+  <style>
+      .background-color-red{background-color: red;}
+  </style>
+</head>
+
+<body>
+  <div class="content-wrapper">
+    <h1>YUI Actors Plugin test page</h1>
+    <p>This plugin helps yui chieve much needed MVVM functionality (something like Knockout.js).<br/>Similar to the other MVVM systems available it does so by reading [data-actor] attribute of the lements on the page and acting accordingly to the setups they provide.</p>
+    <p>Currently there are only three actors available. I hope to extend this number in the future.</p>
+    <h2>Call Actor</h2>    
+    <h3>Explanation</h3>
+    <p>This actor calls a function from the context of your choice (could be an YUI App structure, or any other JS Object, as long as it's available within the context the pugin is setup in.</p>
+    <h3>Usage</h3>
+    <p><ul><li>ATTR: data-actors</li><li>Name: "call"</li><li>Params: <ul><li>"fn": name of the function you would like to invoke. This should always be a string.</li><li>"params": This is/are the param(s) passed to the function defined in "fn". Anything can go here, as long as it is a jalid JSON notation.</li></ul></li></ul></p>
+    <h3>Example</h3>
+    <p><xmp><button data-actors='"call": {"fn": "showAlert", "params": "I have been clicked!"}'>Click Me!</button></xmp></p>
+    <p>Click the button <button data-actors='"call": {"fn": "showAlert", "params": "I have been clicked!"}'>Click me!</button> to see alert.</p>
+    <h3>What can I use this for?</h3>
+    <p>This actor can beused to handle any kind of buttons, links, or any other clickable elements in your UI.</p>  
+    
+    <h2>CSS Toggler</h2>
+    <h3>Explanation</h3>
+    <p>This is a very simple actor. All it does is togglie class on an element it's attached to when element is clicked.</p>
+    <h3>Usage</h3>
+    <p><ul><li>ATTR: data-actors</li><li>Name: "cssToggle"</li><li>Params: <ul><li>"class": Class name to toggle. This should always be a string.</li></ul></li></ul></p>
+    <h3>Example</h3>
+    <p><xmp><button data-actors='"cssToggle": {"class": "background-color-red"}'>Click Me!</button></xmp></p>
+    <p data-actors='"cssToggle": {"class": "background-color-red"}'>Click this paragraph to toggle the background to red, and back.</p>
+    <h3>What can I use this for?</h3>
+    <p>This actor can beused to any type of toggled elements such as menu drop downs, selectons, etc. The click even is fully propogated, so this action will not mess anything up.</p>  
+    
+    
+  <h2>Observer Actor</h2>
+    <h3>Explanation</h3>
+    <p>This actor tracks chenges in your model/model list and updated element's inner HTML accordingly.</p>
+    <h3>Usage</h3>
+    <p><ul><li>ATTR: data-actors</li><li>Name: "observe"</li><li>Params: <ul><li>"model": Model name. This should always be a string and found under the context.</li><li>"attr": attribute from the model that we should observe.</li><li>"setOnLoad": true/false weather or not we should set the value right away.</li></ul></li></ul></p>
+    <h3>Example</h3>
+    <p><xmp><span data-actors='"observe": {"model": "model", "attr": "text", "setOnLoad": true}'></span></xmp></p>
+    <p>Enter any text into the text field and see [me]<span data-actors='"observe": {"model": "model", "attr": "text", "setOnLoad": true}'></span>[/me] change!</p>
+    <p><input type="text" id="myText" value="Type your text here..."><br/><button  data-actors='"call": {"fn": "updateME"}'>Cleck to update [me]!</button></p>    
+
+    <h3>What can I use this for?</h3>
+    <p>This actor can beused to any type of toggled elements such as menu drop downs, selectons, etc. The click even is fully propogated, so this action will not mess anything up.</p>  
+  </div>
+
+  <script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
+  <script src="../src/plugin.js"></script>
+  <script src="../src/actors.js"></script>
+  <script>
+    YUI().use('app-base', 'model', 'actors-plugin', 'actors-plugin-actors', function (Y) {
+      var App = Y.Base.create('App', Y.App, [], {
+        initializer: function () {
+          this.model = new Y.Model({
+            text: "Test text"
+          });
+          this.get('container').plug(Y.Plugins.ActorsPlugin, {
+            actors: Y.Plugins.ActorsPluginActors,
+            context: this
+          });
+          
+        },
+        updateME: function() {
+            this.model.set('text', Y.one('#myText').get('value'));
+        },
+        showAlert: function(params, node, e){
+            alert(params);
+        }
+      });
+      window.app = new App();
+    });
+  </script>
+</body>
+
+</html>

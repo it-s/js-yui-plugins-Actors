@@ -20,7 +20,8 @@ YUI.add('actors-plugin', function (Y) {
       if (Y.Object.hasKey(config, 'removeAttribute')) this.set('removeAttribute', config.removeAttribute);
     }
     if (this.get('autoBind')) {
-      this.get('host').on('change:*', this.bindAll, this);
+//      this.get('host').delegate('DOMNodeInserted', this.bindAll, this);
+//      this.get('host').delegate('DOMNodeRemoved', this.bindAll, this);
       this.bindAll();
     }
 
@@ -183,6 +184,7 @@ YUI.add('actors-plugin', function (Y) {
         this.unbindNode(this._nodes[nodes[i]]);
         delete this._nodes[nodes[i]];
       }
+      this.detach();
     }
   });
 

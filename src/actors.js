@@ -162,6 +162,7 @@ YUI.add('actors-plugin-actors', function (Y) {
       attr = args['attr'],
       id = args['id'],
       fn = args['fn'],
+      target = args['target'] || "HTML", 
       value;
     if (e) {
       value = e.newVal;
@@ -170,7 +171,8 @@ YUI.add('actors-plugin-actors', function (Y) {
         this._getObservedObject().get(attr) :
         this._getObservedObject().getById(id).get(attr);
     }
-    node.setHTML(value);
+    if(target === "HTML") node.setHTML(value);
+      else node.setAttribute(target, value);
     if(fn) context[fn](value, node, e);
   }
 
